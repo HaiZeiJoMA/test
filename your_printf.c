@@ -20,7 +20,12 @@ int my_printf(const char *frm, ...) {
                 i++;
                 switch(frm[i]) {
                     case 'd' : {
-                        int temp = va_arg(arg, int), x = 0, time = 0;
+                        int64_t temp = va_arg(arg, int32_t), x = 0, time = 0;
+    //3,int64_t保证位数足够。
+                        if (temp < 0) {
+                            putchar('-');
+                            temp *= -1;
+                        }
                         //2，va_arg(arg, int)的话(int类型)，读入负号会崩溃。
                         while (temp) {
                             x = x * 10 + temp % 10;
@@ -51,7 +56,7 @@ int main() {
     my_printf("n = %d\n", n);
     my_printf("n = %d\n", 1200);
     my_printf("n = %d\n", -567);
-    my_printf("n = %d\n", INT32_MIN);    //3，缺课不知道这两个要求是什么
+    my_printf("n = %d\n", INT32_MIN);
     my_printf("n = %d\n", INT32_MAX);
     return 0;
 }
